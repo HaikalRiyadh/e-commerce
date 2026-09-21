@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBOY SHOP - Belanja Fashion Online</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🛍️</text></svg>" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ============================================
+    NAVBAR
+    ============================================ -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="main-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="brand-icon"><i class="bi bi-shop"></i></span>
+                IBOY SHOP
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-page="home"><i class="bi bi-house-door me-1"></i> Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="shop"><i class="bi bi-grid me-1"></i> Belanja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="about"><i class="bi bi-info-circle me-1"></i> Tentang</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-light btn-sm" id="auth-btn" data-page="auth">
+                        <i class="bi bi-person me-1"></i> Masuk
+                    </button>
+                    <button class="btn btn-light btn-sm position-relative" id="cart-btn">
+                        <i class="bi bi-handbag"></i>
+                        <span id="cart-count" class="position-absolute start-100 translate-middle badge rounded-pill d-none">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+    CART SIDEBAR OVERLAY
+    ============================================ -->
+    <div id="cart-overlay"></div>
+
+    <!-- ============================================
+    CART SIDEBAR
+    ============================================ -->
+    <div id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h5><i class="bi bi-handbag"></i> Keranjang Saya</h5>
+            <button class="btn-close-cart" id="close-cart-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="cart-items">
+            <div class="empty-state">
+                <i class="bi bi-basket"></i>
+                <h4>Keranjang Kosong</h4>
+                <p>Yuk, mulai belanja sekarang!</p>
+            </div>
+        </div>
+        <div class="cart-sidebar-footer d-none" id="cart-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">Rp 0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Ongkos Kirim</span>
+                    <span><span class="shipping-free">GRATIS</span></span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="total-price">Rp 0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100" id="checkout-btn">
+                <i class="bi bi-wallet2 me-1"></i> Checkout Sekarang
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================
+    PAGE: HOME
+    ============================================ -->
+    <div id="page-home" class="page-section active">
+
+        <!-- HERO CAROUSEL -->
+        <section class="hero-section">
+            <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&h=900&fit=crop" alt="Promo Fashion" loading="lazy" />
+                        <div class="hero-content">
+                            <span class="hero-badge">🔥 Flash Sale</span>
+                            <h1>Koleksi Fashion Terbaru 2026</h1>
+                            <p>Dapatkan diskon hingga 40% untuk produk fashion pilihan. Belanja sekarang dan tampil trendy setiap hari!</p>
+                            <a href="#" class="btn" data-page="shop">Belanja Sekarang <i class="bi bi-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&h=900&fit=crop" alt="Promo Aksesoris" loading="lazy" />
+                        <div class="hero-content">
+                            <span class="hero-badge">✨ New Arrival</span>
+                            <h1>Aksesoris Premium Kekinian</h1>
+                            <p>Lengkapi gaya harianmu dengan koleksi aksesoris terbaru dari brand-brand ternama.</p>
+                            <a href="#" class="btn" data-page="shop">Lihat Koleksi <i class="bi bi-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&h=900&fit=crop" alt="Promo Tas & Dompet" loading="lazy" />
+                        <div class="hero-content">
+                            <span class="hero-badge">🎉 Spesial Bulan Ini</span>
+                            <h1>Tas & Dompet Koleksi Eksklusif</h1>
+                            <p>Beli 2 gratis 1 untuk semua produk tas dan dompet pilihan. Periode terbatas, jangan sampai kehabisan!</p>
+                            <a href="#" class="btn" data-page="shop">Dapatkan Promo <i class="bi bi-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#hero-carousel" data-bs-slide="prev">
+                    <i class="bi bi-chevron-left fs-4"></i>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#hero-carousel" data-bs-slide="next">
+                    <i class="bi bi-chevron-right fs-4"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- CATEGORY QUICK LINKS -->
+        <section class="py-5 section-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Kategori</h2>
+                    <p class="section-subtitle">Temukan produk sesuai kebutuhanmu</p>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="all">
+                            <div class="category-icon"><i class="bi bi-grid"></i></div>
+                            <h6>Semua</h6>
+                            <span class="category-count">Semua Produk</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="baju">
+                            <div class="category-icon"><i class="bi bi-handbag"></i></div>
+                            <h6>Baju</h6>
+                            <span class="category-count">Fashion Pria</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="sepatu">
+                            <div class="category-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5 17.5h13.5C20.5 17.5 20.5 15.5 19.5 13.5C18.7 12.3 17.5 11.7 16 11.8C12.8 12.1 10.2 11.2 8.4 9.1C7.5 8.3 6.3 8.3 5.7 9.2C4.6 10.7 4.6 14.2 5 17.5ZM6.3 15.6h11.4a.6.6 0 0 1 .6.6v.7a.6.6 0 0 1-.6.6H6.3a.6.6 0 0 1-.6-.6v-.7a.6.6 0 0 1 .6-.6Z" />
+                                </svg>
+                            </div>
+                            <h6>Sepatu</h6>
+                            <span class="category-count">Sneakers</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="tas">
+                            <div class="category-icon"><i class="bi bi-bag"></i></div>
+                            <h6>Tas</h6>
+                            <span class="category-count">Ransel & Selempang</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="dompet">
+                            <div class="category-icon"><i class="bi bi-wallet2"></i></div>
+                            <h6>Dompet</h6>
+                            <span class="category-count">Kulit Premium</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="category-card" data-category="sandal">
+                            <div class="category-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M8 5.4C8.6 3.6 9.6 3 11.1 3h1.8c1.5 0 2.5.6 3.1 2.4.5 2.1 1.6 3.4 2.3 4.9.6 1.3.2 3.8-1.4 5.6-.8.9-1.9 1.4-2.9 1.4s-2.1-.5-2.9-1.4c-1.6-1.8-2-4.3-1.4-5.6.7-1.5 1.8-2.8 2.3-4.9ZM9.8 11.3 11.6 7.2l1.1.5L10.9 11.8Zm4.4 0L12.4 7.2l-1.1.5 1.8 4.1Z" />
+                                </svg>
+                            </div>
+                            <h6>Sandal</h6>
+                            <span class="category-count">Santai & Nyaman</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISCOUNT BANNER -->
+        <section class="py-5">
+            <div class="container">
+                <div class="discount-banner">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-3 mb-md-0">
+                            <h3>🎉 Diskon Spesial 40%</h3>
+                            <p>Untuk pembelian pertama kamu! Gunakan kode <strong>IBOY40</strong> di checkout. Promo terbatas!</p>
+                        </div>
+                        <div class="col-md-5 text-md-end">
+                            <button class="btn btn-light btn-lg fw-bold" data-page="shop">Klaim Diskon <i class="bi bi-lightning ms-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED PRODUCTS -->
+        <section class="py-5 section-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Produk Pilihan</h2>
+                    <p class="section-subtitle">Rekomendasi produk terbaik untukmu</p>
+                </div>
+                <div id="product-list" class="row g-4"></div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="py-5 section-testimonials">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title text-white">Kata Mereka</h2>
+                    <p class="section-subtitle section-subtitle-light">Apa kata pelanggan setia IBOY SHOP</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="stars">★★★★★</div>
+                            <p>"Produknya original banget! Pengiriman cepat, packaging rapi. Pasti bakal repeat order lagi."</p>
+                            <div class="testimonial-author">
+                                <div class="avatar"><i class="bi bi-person"></i></div>
+                                <div>
+                                    <h6>Siti Nurhaliza</h6>
+                                    <small>Pembeli Tas Ransel</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="stars">★★★★★</div>
+                            <p>"Recommended seller! Barang sesuai foto, ukuran pas, dan bahannya nyaman dipakai sehari-hari."</p>
+                            <div class="testimonial-author">
+                                <div class="avatar"><i class="bi bi-person"></i></div>
+                                <div>
+                                    <h6>Andi Pratama</h6>
+                                    <small>Pembeli Baju Kaos</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="stars">★★★★★</div>
+                            <p>"Harga terjangkau, kualitas premium. Sepatu keren banget, nyaman dipakai jalan-jalan."</p>
+                            <div class="testimonial-author">
+                                <div class="avatar"><i class="bi bi-person"></i></div>
+                                <div>
+                                    <h6>Dian Ayu</h6>
+                                    <small>Pembeli Sepatu</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRAND PARTNERS -->
+        <section class="py-5 section-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Brand Partner</h2>
+                    <p class="section-subtitle">Dipercaya oleh brand-brand ternama</p>
+                </div>
+                <div class="row g-4 justify-content-center text-center">
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-apple fs-1"></i>
+                            <div class="fw-bold small mt-1">Apple</div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-nike fs-1"></i>
+                            <div class="fw-bold small mt-1">Nike</div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-adidas fs-1"></i>
+                            <div class="fw-bold small mt-1">Adidas</div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-google fs-1"></i>
+                            <div class="fw-bold small mt-1">Google</div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-microsoft fs-1"></i>
+                            <div class="fw-bold small mt-1">Microsoft</div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class="brand-partner-card">
+                            <i class="bi bi-amazon fs-1"></i>
+                            <div class="fw-bold small mt-1">Amazon</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================
+    PAGE: SHOP
+    ============================================ -->
+    <div id="page-shop" class="page-section">
+
+        <!-- SEARCH & FILTERS -->
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="section-title">Belanja</h2>
+                    <p class="section-subtitle">Cari dan filter produk favoritmu</p>
+                </div>
+
+                <div class="search-section">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" id="search-input" class="form-control" placeholder="Cari produk..." />
+                                <button class="btn btn-primary" id="search-btn"><i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <select id="category-filter" class="form-select">
+                                <option value="all">Semua Kategori</option>
+                                <option value="baju">Baju</option>
+                                <option value="sepatu">Sepatu</option>
+                                <option value="tas">Tas</option>
+                                <option value="dompet">Dompet</option>
+                                <option value="sandal">Sandal</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <select id="sort-filter" class="form-select">
+                                <option value="default">Urutkan</option>
+                                <option value="cheap">Termurah</option>
+                                <option value="expensive">Termahal</option>
+                                <option value="name">A-Z</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-outline-secondary w-100" id="reset-filter-btn" title="Reset Filter">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shop-product-list" class="row g-4 mt-3"></div>
+                <div id="shop-empty" class="text-center py-5 d-none">
+                    <i class="bi bi-search fs-1 text-muted d-block mb-3"></i>
+                    <h5 class="fw-bold">Produk Tidak Ditemukan</h5>
+                    <p class="text-muted">Coba kata kunci lain atau reset filter</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============================================
+    PAGE: PRODUCT DETAIL
+    ============================================ -->
+    <div id="page-detail" class="page-section">
+        <div class="container py-5">
+            <div class="detail-container" id="detail-content"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    PAGE: AUTH
+    ============================================ -->
+    <div id="page-auth" class="page-section">
+        <div class="container py-5">
+            <div class="auth-container">
+                <div class="auth-card" id="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-icon"><i class="bi bi-person-circle"></i></div>
+                        <h4 id="auth-title">Masuk ke Akun</h4>
+                        <p id="auth-subtitle">Masukkan email dan password untuk melanjutkan</p>
+                    </div>
+
+                    <form id="auth-form">
+                        <div id="name-field" class="form-floating mb-3 d-none">
+                            <input type="text" class="form-control" id="register-name" placeholder="Nama Lengkap" />
+                            <label for="register-name">Nama Lengkap</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="auth-email" placeholder="nama@email.com" required />
+                            <label for="auth-email">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="auth-password" placeholder="Password" required />
+                            <label for="auth-password">Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-3" id="auth-submit-btn">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
+                        </button>
+                    </form>
+
+                    <div class="auth-toggle" id="auth-toggle">
+                        Belum punya akun? <a href="#" id="switch-auth">Daftar Sekarang</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    PAGE: ABOUT
+    ============================================ -->
+    <div id="page-about" class="page-section">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Tentang IBOY SHOP</h2>
+                <p class="section-subtitle">Toko fashion online terpercaya sejak 2024</p>
+            </div>
+            <div class="row g-4 align-items-center mb-5">
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=500&fit=crop" alt="Tentang Kami" class="img-fluid rounded-4 shadow-sm" loading="lazy" />
+                </div>
+                <div class="col-md-6">
+                    <h4 class="fw-bold mb-3">Cerita Kami</h4>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        IBOY SHOP adalah platform e-commerce fashion yang berkomitmen menghadirkan 
+                        produk-produk berkualitas dengan harga terjangkau. Kami bekerja sama dengan 
+                        berbagai brand lokal dan internasional untuk memberikan pengalaman belanja 
+                        yang menyenangkan dan aman.
+                    </p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        Dengan sistem pengiriman cepat dan customer service yang responsif, 
+                        kepuasan pelanggan adalah prioritas utama kami.
+                    </p>
+                    <div class="row g-3 mt-4">
+                        <div class="col-4 text-center">
+                            <div class="stat-number">10K+</div>
+                            <small class="text-muted">Pelanggan</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="stat-number">500+</div>
+                            <small class="text-muted">Produk</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="stat-number">4.9</div>
+                            <small class="text-muted">Rating</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    PAGE: PAYMENT
+    ============================================ -->
+    <div id="page-payment" class="page-section">
+        <div class="container py-5">
+            <div class="payment-wrapper">
+                <div class="text-center mb-4">
+                    <h2 class="section-title">Pembayaran</h2>
+                    <p class="section-subtitle">Selesaikan pembayaran pesananmu</p>
+                </div>
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <h4><i class="bi bi-wallet2 me-2"></i>Detail Pembayaran</h4>
+                        <p>Pilih metode pembayaran yang tersedia</p>
+                    </div>
+                    <div class="payment-body">
+                        <div id="payment-detail-loading" class="text-center py-4">
+                            <div class="spinner" style="width: 40px; height: 40px;"></div>
+                            <p class="mt-3 text-muted">Memuat detail pesanan...</p>
+                        </div>
+                        <div id="payment-detail-content" class="d-none">
+                            <div class="row g-3 mb-4">
+                                <div class="col-6"><strong>Metode Pembayaran</strong></div>
+                                <div class="col-6 text-end" id="payment-method-display">-</div>
+                                <div class="col-6"><strong>Total Pembayaran</strong></div>
+                                <div class="col-6 text-end"><span class="fw-bold fs-5 text-primary" id="payment-amount-display">Rp 0</span></div>
+                                <div class="col-6"><strong>Status</strong></div>
+                                <div class="col-6 text-end"><span class="badge bg-warning text-dark">Menunggu Pembayaran</span></div>
+                            </div>
+
+                            <hr />
+
+                            <h6 class="fw-bold mb-3"><i class="bi bi-credit-card me-2"></i>Pilih Metode</h6>
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <div class="payment-method-card" data-method="bca">
+                                        <i class="bi bi-bank"></i>
+                                        <h6>Bank BCA</h6>
+                                        <small>Virtual Account</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="payment-method-card" data-method="mandiri">
+                                        <i class="bi bi-bank2"></i>
+                                        <h6>Bank Mandiri</h6>
+                                        <small>Virtual Account</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="payment-method-card" data-method="gopay">
+                                        <i class="bi bi-phone"></i>
+                                        <h6>GoPay</h6>
+                                        <small>QRIS</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="payment-method-card" data-method="qris">
+                                        <i class="bi bi-qr-code"></i>
+                                        <h6>QRIS</h6>
+                                        <small>Semua Aplikasi</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="qr-display" id="qr-display">
+                                <div id="qrcode"><i class="bi bi-qr-code" style="font-size: 6rem; color: var(--gray-500);"></i></div>
+                                <p>Scan QR untuk membayar</p>
+                            </div>
+
+                            <div class="va-display mb-4" id="va-display">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="va-label">Virtual Account</span>
+                                    <button class="btn btn-sm btn-outline-primary" id="copy-va-btn">
+                                        <i class="bi bi-clipboard me-1"></i> Salin
+                                    </button>
+                                </div>
+                                <div class="va-number" id="va-number">1234 5678 9012 3456</div>
+                                <div class="va-amount mt-2" id="va-amount">Rp 0</div>
+                            </div>
+
+                            <button class="btn btn-primary w-100 py-3" id="payment-complete-btn">
+                                <i class="bi bi-check-lg me-1"></i> Konfirmasi Pembayaran
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+    CHECKOUT LOADING OVERLAY
+    ============================================ -->
+    <div id="checkout-loading">
+        <div class="spinner"></div>
+        <p>Memproses pesanan...</p>
+    </div>
+
+    <!-- ============================================
+    TOAST CONTAINER
+    ============================================ -->
+    <div id="toast-container"></div>
+
+    <!-- ============================================
+    BACK TO TOP BUTTON
+    ============================================ -->
+    <button id="back-to-top" title="Kembali ke Atas">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- ============================================
+    FOOTER
+    ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="d-flex align-items-center gap-2">
+                        <span class="brand-icon" style="width: 32px; height: 32px; background: var(--bg-gradient); border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; -webkit-text-fill-color: white; font-size: 0.9rem;">
+                            <i class="bi bi-shop"></i>
+                        </span>
+                        IBOY SHOP
+                    </h5>
+                    <p>Toko fashion online terpercaya dengan produk-produk berkualitas. Belanja aman, cepat, dan mudah.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h5>Belanja</h5>
+                    <ul>
+                        <li><a href="#" data-page="shop">Semua Produk</a></li>
+                        <li><a href="#" data-page="shop">Baju</a></li>
+                        <li><a href="#" data-page="shop">Sepatu</a></li>
+                        <li><a href="#" data-page="shop">Tas</a></li>
+                        <li><a href="#" data-page="shop">Aksesoris</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h5>Bantuan</h5>
+                    <ul>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Pengembalian</a></li>
+                        <li><a href="#">Pengiriman</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Kontak</h5>
+                    <ul>
+                        <li><a href="#"><i class="bi bi-envelope"></i> support@iboyshop.com</a></li>
+                        <li><a href="#"><i class="bi bi-telephone"></i> +62 812 3456 7890</a></li>
+                        <li><a href="#"><i class="bi bi-geo-alt"></i> Jakarta, Indonesia</a></li>
+                        <li><a href="#"><i class="bi bi-clock"></i> Sen-Sab 08:00 - 20:00</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 <a href="#">IBOY SHOP</a>. All rights reserved. Made with <i class="bi bi-heart-fill text-danger"></i> in Indonesia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+    SCRIPTS
+    ============================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
